@@ -3,6 +3,13 @@
 import AppLayout from "@/Layouts/AppLayout.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import {Link} from "@inertiajs/vue3";
+import {Inertia} from "@inertiajs/inertia";
+
+const deleteCategory = id => {
+    if (confirm('Are you sure?')) {
+        Inertia.delete(route('categories.destroy', id))
+    }
+}
 
 </script>
 
@@ -47,16 +54,17 @@ import {Link} from "@inertiajs/vue3";
                             </div>
                             <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
                                 <div class="flex gap-4">
-                                    <Link
+                                    <Link :href="route('categories.edit', category)"
                                         class="text-md leading-6 text-blue-600"
                                     >
                                         Edit
                                     </Link>
-                                    <Link
+                                    <button
+                                        @click="deleteCategory(category.id)"
                                         class="text-md leading-6 text-red-600"
                                     >
                                         Delete
-                                    </Link>
+                                    </button>
                                 </div>
                             </div>
                         </li>

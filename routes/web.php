@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\NoteController;
+use App\Http\Controllers\StatusController;
 use App\Models\Category;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -15,11 +17,13 @@ Route::get('/', function () {
     ]);
 });
 
-Route::middleware([ 'auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
+Route::middleware([ 'auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(callback : function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
     Route::resource('/categories', CategoryController::class);
+    Route::resource('/statuses', StatusController::class);
+    Route::resource('/notes', NoteController::class);
 });
 
 

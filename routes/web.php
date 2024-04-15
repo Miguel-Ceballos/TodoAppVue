@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\NoteController;
+use App\Http\Controllers\TaskController;
 use App\Http\Controllers\StatusController;
 use App\Models\Category;
 use Illuminate\Foundation\Application;
@@ -23,7 +23,7 @@ Route::middleware([ 'auth:sanctum', config('jetstream.auth_session'), 'verified'
     })->name('dashboard');
     Route::resource('/categories', CategoryController::class);
     Route::resource('/statuses', StatusController::class);
-    Route::resource('/notes', NoteController::class);
+    Route::resource('/{category:id}/tasks', TaskController::class);
 });
 
 

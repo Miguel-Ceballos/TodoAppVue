@@ -12,7 +12,7 @@ class StatusController extends Controller
      */
     public function index()
     {
-        return inertia('Statuses/Index', [ 'statuses' => Status::all() ]);
+        return inertia('Statuses/Index', [ 'statuses' => auth()->user()->statuses ]);
     }
 
     /**

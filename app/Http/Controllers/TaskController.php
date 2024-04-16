@@ -39,7 +39,7 @@ class TaskController extends Controller
             'status_id' => $request->status_id,
             'user_id' => auth()->user()->id
         ]);
-        return redirect()->route('tasks.index', $category->id);
+        return redirect()->route('tasks.index', $category->slug);
     }
 
     /**
@@ -64,7 +64,7 @@ class TaskController extends Controller
     public function update(Category $category, TaskRequest $request, Task $task)
     {
         $task->update($request->validated());
-        return redirect()->route('tasks.index', $category->id);
+        return redirect()->route('tasks.index', $category->slug);
     }
 
     /**

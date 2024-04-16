@@ -36,7 +36,7 @@ const deleteTask = id => {
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden">
 
-                    <Link :href="route('tasks.create', category.id)">
+                    <Link :href="route('tasks.create', category.slug)">
                         <PrimaryButton type="button" class="mb-10">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                  class="w-4 h-4 mr-2">
@@ -67,7 +67,7 @@ const deleteTask = id => {
                             </div>
                             <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
                                 <div class="flex gap-4">
-                                    <Link :href="route('tasks.edit', [task, category.id])"
+                                    <Link :href="route('tasks.edit', [task, category.slug])"
                                           class="text-md leading-6 text-blue-600"
                                     >
                                         Edit

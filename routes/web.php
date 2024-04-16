@@ -23,7 +23,7 @@ Route::middleware([ 'auth:sanctum', config('jetstream.auth_session'), 'verified'
     })->name('dashboard');
     Route::resource('/categories', CategoryController::class);
     Route::resource('/statuses', StatusController::class);
-    Route::resource('/{category:id}/tasks', TaskController::class);
+    Route::resource('/{category:slug}/tasks', TaskController::class);
 });
 
 

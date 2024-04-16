@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use function Laravel\Prompts\error;
 
 class CategoryController extends Controller
 {
@@ -30,8 +33,18 @@ class CategoryController extends Controller
     public function store(CategoryRequest $request)
     {
 
+        $isExist = DB::table('categories')
+            ->where('slug', '=', Str::slug($request->name))
+            ->where('user_id', '=', auth()->user()->id)
+            ->get();
+
+        if(count($isExist) > 0){
+            return back()->withErrors('This category already exist', 'name');
+        }
+
         Category::create([
             'user_id' => auth()->user()->id,
+            'slug' => Str::slug($request->name),
             'name' => $request->name,
         ]);
         return redirect()->route('categories.index');

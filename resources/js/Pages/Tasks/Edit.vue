@@ -41,7 +41,7 @@ const form = useForm({
                 <div class="bg-white overflow-hidden">
                     <TasksForm
                         :form="form"
-                        @submit="form.put(route('tasks.update', [task, category.id]))"
+                        @submit="form.put(route('tasks.update', [task, category.slug]))"
                         :updating="true"
                         :statuses="statuses"
                     />

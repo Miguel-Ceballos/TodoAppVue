@@ -32,13 +32,13 @@ defineEmits(['submit'])
             <div class="col-span-6 sm:col-span-6">
                 <InputLabel for="title" value="Name"/>
                 <TextInput id="title" v-model="form.title" type="text" autocomplete="title" class="mt-1 block w-full" placeholder="Note title"/>
-                <InputError :message="$page.props.errors.title" class="mt-2"/>
+                <InputError v-if="form.errors" :message="form.errors.title" class="mt-2"/>
             </div>
 
             <div class="col-span-6 sm:col-span-6">
                 <InputLabel for="description" value="Description"/>
                 <textarea id="description" name="description" v-model="form.description" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Note description..."></textarea>
-                <InputError :message="$page.props.errors.description" class="mt-2"/>
+                <InputError v-if="form.errors" :message="form.errors.description" class="mt-2"/>
             </div>
 
             <div class="col-span-6 sm:col-span-6">
@@ -48,7 +48,7 @@ defineEmits(['submit'])
                 >
                     <option v-for="status in statuses" :value="status.id">{{status.name}}</option>
                 </select>
-                <InputError :message="$page.props.errors.status_id" class="mt-2"/>
+                <InputError v-if="form.errors" :message="form.errors.status_id" class="mt-2"/>
             </div>
         </template>
 

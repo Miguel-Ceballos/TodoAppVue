@@ -28,14 +28,15 @@ defineEmits(['submit'])
         <template #form>
             <div class="col-span-6 sm:col-span-6">
                 <InputLabel for="name" value="Name"/>
-                <TextInput id="name" v-model="form.name" type="text" autocomplete="name" class="mt-1 block w-full"/>
-                <InputError :message="$page.props.errors.name" class="mt-2"/>
+                <TextInput id="name" v-model="form.name" type="text" autocomplete="name" class="mt-1 block w-full"
+                           placeholder="Category name"/>
+                <InputError v-if="form.errors" :message="form.errors.name" class="mt-2"/>
             </div>
         </template>
 
         <template #actions>
             <PrimaryButton>
-                {{updating ? 'Update' : 'Create'}}
+                {{ updating ? 'Update' : 'Create' }}
             </PrimaryButton>
         </template>
 

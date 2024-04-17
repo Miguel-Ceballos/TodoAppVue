@@ -4,6 +4,7 @@ import AppLayout from "@/Layouts/AppLayout.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import {Link} from "@inertiajs/vue3";
 import {Inertia} from "@inertiajs/inertia";
+import Checkbox from "@/Components/Checkbox.vue";
 
 defineProps({
     tasks: {
@@ -33,58 +34,52 @@ const deleteTask = id => {
         </template>
 
         <div class="py-10">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden">
+            <Link :href="route('tasks.create', category.slug)">
+                <PrimaryButton type="button" class="mb-10">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                         class="w-4 h-4 mr-2">
+                        <path fill-rule="evenodd"
+                              d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z"
+                              clip-rule="evenodd"/>
+                    </svg>
+                    CREATE TASK
 
-                    <Link :href="route('tasks.create', category.slug)">
-                        <PrimaryButton type="button" class="mb-10">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                 class="w-4 h-4 mr-2">
-                                <path fill-rule="evenodd"
-                                      d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z"
-                                      clip-rule="evenodd"/>
-                            </svg>
-                            CREATE TASK
+                </PrimaryButton>
+            </Link>
 
-                        </PrimaryButton>
-                    </Link>
-
-                    <ul v-if="tasks.length > 0" role="list" class="space-y-2">
-                        <li v-for="task in tasks"
-                            class="flex justify-between gap-x-6 py-5 p-2 border border-gray-100 rounded-md hover:bg-gray-100"
-                        >
-                            <div class="flex gap-4 text-gray-600">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                     class="w-6 h-6 ml-4">
-                                    <path fill-rule="evenodd"
-                                          d="M6.75 2.25A.75.75 0 0 1 7.5 3v1.5h9V3A.75.75 0 0 1 18 3v1.5h.75a3 3 0 0 1 3 3v11.25a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V7.5a3 3 0 0 1 3-3H6V3a.75.75 0 0 1 .75-.75Zm13.5 9a1.5 1.5 0 0 0-1.5-1.5H5.25a1.5 1.5 0 0 0-1.5 1.5v7.5a1.5 1.5 0 0 0 1.5 1.5h13.5a1.5 1.5 0 0 0 1.5-1.5v-7.5Z"
-                                          clip-rule="evenodd"/>
+            <ul v-if="tasks.length > 0" role="list">
+                <li v-for="task in tasks"
+                    class="flex justify-between items-center gap-x-6 py-5 p-2 border-b"
+                >
+                    <div class="flex gap-4 text-gray-600">
+                        <Checkbox />
+                        <p class="text-sm text-gray-800">{{ task.title }}</p>
+                    </div>
+                    <div class="flex gap-4 text-gray-600">
+                        <p class="text-md text-gray-800">To do</p>
+                    </div>
+                    <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
+                        <div class="flex justify-center  gap-2">
+                            <Link :href="route('tasks.edit', [task, category.slug])"
+                                  class="text-md leading-6 text-gray-500 hover:bg-slate-100 p-1 rounded-md"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
                                 </svg>
-                                <p class="text-md font-semibold leading-6 text-gray-800">{{ task.title }}</p>
-                            </div>
-                            <div class="flex gap-4 text-gray-600">
-                                <p class="text-md font-semibold leading-6 text-gray-800">{{ task.status_id }}</p>
-                            </div>
-                            <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-                                <div class="flex gap-4">
-                                    <Link :href="route('tasks.edit', [task, category.slug])"
-                                          class="text-md leading-6 text-blue-600"
-                                    >
-                                        Edit
-                                    </Link>
-                                    <button
-                                        @click="deleteTask(task.id)"
-                                        class="text-md leading-6 text-red-600"
-                                    >
-                                        Delete
-                                    </button>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                    <p v-else>No hay notas existentes</p>
-                </div>
-            </div>
+                            </Link>
+                            <button
+                                @click="deleteTask(task.id)"
+                                class="text-md leading-6 text-gray-600 hover:bg-slate-100 p-1 rounded-md"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <p v-else>No hay notas existentes</p>
         </div>
     </AppLayout>
 </template>

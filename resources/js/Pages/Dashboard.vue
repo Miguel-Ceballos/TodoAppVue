@@ -10,11 +10,7 @@ import AppLayout from "@/Layouts/AppLayout.vue";
             </h2>
         </template>
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden sm:rounded-lg">
-                    <h1>hello world</h1>
-                </div>
-            </div>
+            <h1>hello world</h1>
         </div>
     </AppLayout>
 </template>

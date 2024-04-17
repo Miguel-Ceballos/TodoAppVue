@@ -22,7 +22,7 @@ class TaskController extends Controller
      */
     public function create(Category $category)
     {
-        return inertia('Tasks/Create', [ 'statuses' => Status::all(), 'category' => $category ]);
+        return inertia('Tasks/Create', [ 'statuses' => auth()->user()->statuses, 'category' => $category ]);
     }
 
     /**

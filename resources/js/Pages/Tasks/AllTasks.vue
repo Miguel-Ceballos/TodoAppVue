@@ -62,7 +62,7 @@ const handlerClickUpdate = () => {
 const deleteTask = (task) => {
     if (confirm('Are you sure?')) {
         // Inertia.delete(route('tasks.destroy', [category, task]))
-        router.delete(route('inbox.destroy', [task]))
+        router.delete(route('inbox.destroy', [task]), {preserveScroll: true})
     }
 }
 

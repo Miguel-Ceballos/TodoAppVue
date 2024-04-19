@@ -13,10 +13,10 @@ const props = defineProps({
     closeable: {
         type: Boolean,
         default: true,
-    },
+    }
 });
 
-const emit = defineEmits(['close']);
+const emit = defineEmits(['close', 'handleClickModal']);
 const dialog = ref();
 const showSlot = ref(props.show);
 
@@ -36,6 +36,7 @@ watch(() => props.show, () => {
 
 const close = () => {
     if (props.closeable) {
+        emit('handleClickModal')
         emit('close');
     }
 };
@@ -75,7 +76,7 @@ const maxWidthClass = computed(() => {
                 leave-from-class="opacity-100"
                 leave-to-class="opacity-0"
             >
-                <div v-show="show" class="fixed inset-0 transform transition-all" @click="close">
+                <div v-show="show" class="fixed inset-0 transform transition-all" @click="$emit('handleClickModal')">
                     <div class="absolute inset-0 bg-gray-500 opacity-75" />
                 </div>
             </transition>
@@ -88,7 +89,7 @@ const maxWidthClass = computed(() => {
                 leave-from-class="opacity-100 translate-y-0 sm:scale-100"
                 leave-to-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-                <div v-show="show" class="mb-6 bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full sm:mx-auto" :class="maxWidthClass">
+                <div v-show="show" class="mb-6 bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full sm:mx-auto sm:max-w-md">
                     <slot v-if="showSlot"/>
                 </div>
             </transition>

@@ -2,7 +2,7 @@
 
 import AppLayout from "@/Layouts/AppLayout.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import {Link} from "@inertiajs/vue3";
+import {Link, router} from "@inertiajs/vue3";
 import {Inertia} from "@inertiajs/inertia";
 import Checkbox from "@/Components/Checkbox.vue";
 
@@ -19,7 +19,8 @@ defineProps({
 
 const deleteTask = (category, task) => {
     if (confirm('Are you sure?')) {
-        Inertia.delete(route('tasks.destroy', [category, task]))
+        // Inertia.delete(route('tasks.destroy', [category, task]))
+        router.delete(route('tasks.destroy', [category, task]))
     }
 }
 

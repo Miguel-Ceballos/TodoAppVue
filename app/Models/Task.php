@@ -13,6 +13,8 @@ class Task extends Model
 
     protected $guarded = [];
 
+//    protected $with = ['category'];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');

@@ -74,6 +74,6 @@ class TaskController extends Controller
     {
 //        dd($task);
         $task->delete();
-        return redirect()->route('tasks.index', $category->slug);
+        return to_route('tasks.index', $category->slug);
     }
 }

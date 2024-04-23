@@ -22,7 +22,9 @@ defineProps({
     }
 })
 
+const modal = ref(false)
 const update = ref(false)
+const currentTask = ref(Number)
 
 const form = useForm({
     title: '',
@@ -34,30 +36,40 @@ const form = useForm({
         type: Number
     }
 })
-
 const storeTask = () => {
     form.post(route('inbox.store'))
     router.on('success', (event) => {
         modal.value = false
         form.reset()
     })
+
 }
+const updateTask = () => {
+    form.put(route('inbox.update', [currentTask.value]))
+    router.on('success', (event) => {
+        modal.value = false
+        form.reset()
+    })
 
-const modal = ref(false)
-
-// const handlerClickUpdate = () => {
-//     update.value = !update.value
-//     handleClickModal()
-// }
-
-const handleClickModal = () => {
-    modal.value = !modal.value
 }
 
 const deleteTask = (task) => {
     if (confirm('Are you sure?')) {
         router.delete(route('inbox.destroy', [task]), {preserveScroll: true})
     }
+}
+
+const handleClickModal = () => {
+    update.value = false
+    modal.value = !modal.value
+    form.reset()
+}
+
+const handlerClickUpdate = (task) => {
+    currentTask.value = task.id
+    update.value = true
+    Object.assign(form, task)
+    modal.value = !modal.value
 }
 
 </script>
@@ -72,12 +84,35 @@ const deleteTask = (task) => {
 
         <div class="py-10">
 
+            <button @click="handleClickModal" class="flex items-center gap-2 text-indigo-500 hover:text-indigo-600"
+                    type="button">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                     class="w-8 h-8">
+                    <path fill-rule="evenodd"
+                          d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z"
+                          clip-rule="evenodd"/>
+                </svg>
+                <span class="text-gray-800 hover:text-indigo-600">Add Task</span>
+            </button>
 
+            <!-- Crete tasks modal -->
             <CustomModal :modal="modal"
                          :form="form"
                          :categories="categories"
                          :statuses="statuses"
+                         :update="update"
                          @submit="storeTask"
+                         @handleClickModal="handleClickModal"
+            />
+
+            <!-- Update tasks modal -->
+            <CustomModal :modal="modal"
+                         :form="form"
+                         :categories="categories"
+                         :statuses="statuses"
+                         v-if="update"
+                         :update="update"
+                         @submit="updateTask"
                          @handleClickModal="handleClickModal"
             />
 
@@ -92,7 +127,7 @@ const deleteTask = (task) => {
                     <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
                         <div class="flex justify-center gap-2">
                             <button
-                                @click="handlerClickUpdate"
+                                @click="handlerClickUpdate(task)"
                                 class="text-md leading-6 text-gray-600 hover:bg-slate-100 p-1 rounded-md"
                             >
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"

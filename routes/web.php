@@ -27,6 +27,7 @@ Route::middleware([ 'auth:sanctum', config('jetstream.auth_session'), 'verified'
     Route::resource('/statuses', StatusController::class);
     Route::get('/inbox', [AllTasksController::class, 'index'])->name('inbox.index');
     Route::post('/inbox', [AllTasksController::class, 'store'])->name('inbox.store');
+    Route::put('/inbox/{task:id}', [AllTasksController::class, 'update'])->name('inbox.update');
     Route::delete('/inbox/{task:id}', [AllTasksController::class, 'destroy'])->name('inbox.destroy');
 });
 

@@ -33,8 +33,9 @@ class AllTasksController extends Controller
 
     public function update(TaskRequest $request, Task $task)
     {
+//        dd($task);
         $task->update($request->validated());
-        return redirect()->route('inbox.index');
+        return to_route('inbox.index');
     }
 
     public function destroy(Task $task)

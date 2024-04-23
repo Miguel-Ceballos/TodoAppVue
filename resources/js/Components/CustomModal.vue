@@ -27,6 +27,7 @@ const props = defineProps({
     },
     update: {
         type: Boolean,
+        required: true,
         default: false
     }
 })
@@ -36,18 +37,6 @@ defineEmits(['submit', 'handleClickModal'])
 </script>
 
 <template>
-
-    <button @click="$emit('handleClickModal')" class="flex items-center gap-2 text-indigo-500 hover:text-indigo-600"
-            type="button">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-             class="w-8 h-8">
-            <path fill-rule="evenodd"
-                  d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z"
-                  clip-rule="evenodd"/>
-        </svg>
-        <span class="text-gray-800 hover:text-indigo-600">Add Task</span>
-    </button>
-
     <Modal :show="modal" @handleClickModal="$emit('handleClickModal')">
         <div class="flex pt-1 pr-1 rounded-t dark:border-gray-600">
             <button @click="$emit('handleClickModal')" type="button"

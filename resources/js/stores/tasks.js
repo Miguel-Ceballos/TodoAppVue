@@ -2,7 +2,7 @@ import {defineStore} from "pinia";
 import {router, useForm} from "@inertiajs/vue3";
 import {useModalStore} from "@/stores/modal.js";
 
-export const useTasksStore = defineStore('tasks', () => {
+export const useTasksStore = defineStore('tasks', (type, callback) => {
 
     const modal = useModalStore()
 
@@ -26,17 +26,13 @@ export const useTasksStore = defineStore('tasks', () => {
     }
 
     function updateTask() {
-        form.put(route('inbox.update', [modal.currentItem]))
-        router.on('success', (event) => {
-            modal.modal = false
-            form.reset()
-        })
+        form.put(route('inbox.update', [modal.currentItem]), {preserveScroll: true})
+        modal.modal = false
+        form.reset()
     }
 
     function deleteTask(id) {
-        if (confirm('Are you sure?')) {
-            router.delete(route('inbox.destroy', [id]), {preserveScroll: true})
-        }
+        router.delete(route('inbox.destroy', [id]), {preserveScroll: true})
     }
 
     function action() {

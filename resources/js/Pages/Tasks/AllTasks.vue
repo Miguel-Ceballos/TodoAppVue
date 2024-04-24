@@ -2,9 +2,10 @@
 
 import Checkbox from "@/Components/Checkbox.vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
-import {router, useForm} from "@inertiajs/vue3";
-import {ref} from "vue";
 import CustomModal from "@/Components/CustomModal.vue";
+import {useModalStore} from "@/stores/modal.js";
+
+const modal = useModalStore()
 
 
 defineProps({
@@ -22,56 +23,6 @@ defineProps({
     }
 })
 
-const modal = ref(false)
-const update = ref(false)
-const currentTask = ref(Number)
-
-const form = useForm({
-    title: '',
-    description: '',
-    status_id: {
-        type: Number
-    },
-    category_id: {
-        type: Number
-    }
-})
-const storeTask = () => {
-    form.post(route('inbox.store'))
-    router.on('success', (event) => {
-        modal.value = false
-        form.reset()
-    })
-
-}
-const updateTask = () => {
-    form.put(route('inbox.update', [currentTask.value]))
-    router.on('success', (event) => {
-        modal.value = false
-        form.reset()
-    })
-
-}
-
-const deleteTask = (task) => {
-    if (confirm('Are you sure?')) {
-        router.delete(route('inbox.destroy', [task]), {preserveScroll: true})
-    }
-}
-
-const handleClickModal = () => {
-    update.value = false
-    modal.value = !modal.value
-    form.reset()
-}
-
-const handlerClickUpdate = (task) => {
-    currentTask.value = task.id
-    update.value = true
-    Object.assign(form, task)
-    modal.value = !modal.value
-}
-
 </script>
 
 <template>
@@ -84,7 +35,8 @@ const handlerClickUpdate = (task) => {
 
         <div class="py-10">
 
-            <button @click="handleClickModal" class="flex items-center gap-2 text-indigo-500 hover:text-indigo-600"
+            <button @click="modal.handleClickModal()"
+                    class="flex items-center gap-2 text-indigo-500 hover:text-indigo-600"
                     type="button">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                      class="w-8 h-8">
@@ -96,24 +48,13 @@ const handlerClickUpdate = (task) => {
             </button>
 
             <!-- Crete tasks modal -->
-            <CustomModal :modal="modal"
-                         :form="form"
+            <CustomModal :modal="modal.modal"
+                         :form="modal.form"
                          :categories="categories"
                          :statuses="statuses"
-                         :update="update"
-                         @submit="storeTask"
-                         @handleClickModal="handleClickModal"
-            />
-
-            <!-- Update tasks modal -->
-            <CustomModal :modal="modal"
-                         :form="form"
-                         :categories="categories"
-                         :statuses="statuses"
-                         v-if="update"
-                         :update="update"
-                         @submit="updateTask"
-                         @handleClickModal="handleClickModal"
+                         :update="modal.isUpdate"
+                         @submit="modal.action"
+                         @handleClickModal="modal.handleClickModal"
             />
 
             <ul v-if="tasks.length > 0" role="list">
@@ -127,7 +68,7 @@ const handlerClickUpdate = (task) => {
                     <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
                         <div class="flex justify-center gap-2">
                             <button
-                                @click="handlerClickUpdate(task)"
+                                @click="modal.handleClickModalUpdate(task)"
                                 class="text-md leading-6 text-gray-600 hover:bg-slate-100 p-1 rounded-md"
                             >
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -137,7 +78,7 @@ const handlerClickUpdate = (task) => {
                                 </svg>
                             </button>
                             <button
-                                @click="deleteTask(task.id)"
+                                @click="modal.deleteTask(task.id)"
                                 class="text-md leading-6 text-gray-600 hover:bg-slate-100 p-1 rounded-md"
                             >
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -150,7 +91,7 @@ const handlerClickUpdate = (task) => {
                     </div>
                 </li>
             </ul>
-            <p v-else>No hay notas existentes</p>
+            <p v-else class="mt-4 text-center">No hay notas existentes</p>
         </div>
     </AppLayout>
 </template>

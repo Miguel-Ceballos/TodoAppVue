@@ -18,7 +18,7 @@ const hasActions = computed(() => !! useSlots().actions);
             </template>
         </SectionTitle>
 
-        <div class="mt-2 md:mt-0 md:col-span-2">
+        <div class="mt-2 md:mt-0 md:col-span-2 shadow">
             <form @submit.prevent="$emit('submitted')">
                 <div
                     class="px-4 py-5 bg-white sm:px-6 sm:py-2 shadow"
@@ -29,10 +29,13 @@ const hasActions = computed(() => !! useSlots().actions);
                     </div>
                 </div>
 
-                <div v-if="hasActions" class="flex items-center justify-end px-4 py-3 bg-gray-50 text-end sm:px-6 shadow sm:rounded-bl-md sm:rounded-br-md">
+                <div v-if="hasActions" class="flex items-center justify-end px-4 py-1 bg-gray-50 text-end sm:px-6 sm:rounded-bl-md sm:rounded-br-md">
                     <slot name="actions" />
                 </div>
             </form>
+            <div class="px-4 pb-4">
+                <slot />
+            </div>
         </div>
     </div>
 </template>

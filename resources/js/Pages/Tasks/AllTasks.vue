@@ -61,10 +61,10 @@ defineProps({
 
             <ul v-if="tasks.length > 0" role="list">
                 <li v-for="task in tasks"
-                    class="flex items-center gap-2 md:gap-x-6 py-5 p-2 border-b hover:cursor-pointer hover:bg-gray-50"
+                    class="flex items-center gap-1 md:gap-x-2 border-b hover:cursor-pointer hover:bg-gray-50"
                 >
                     <Checkbox/>
-                    <div class="flex  w-full gap-4 text-gray-600" @click="modal.handleClickModalUpdate(task, store.form)">
+                    <div class="flex w-full gap-4 py-4 p-2 text-gray-600" @click="modal.handleClickModalUpdate(task, store.form)">
                         <p class="text-sm text-gray-800">{{ task.title }}</p>
                     </div>
                 </li>

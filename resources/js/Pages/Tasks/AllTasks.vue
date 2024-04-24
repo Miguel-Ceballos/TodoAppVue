@@ -4,8 +4,10 @@ import Checkbox from "@/Components/Checkbox.vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import CustomModal from "@/Components/CustomModal.vue";
 import {useModalStore} from "@/stores/modal.js";
+import {useTasksStore} from "@/stores/tasks.js";
 
 const modal = useModalStore()
+const store = useTasksStore()
 
 
 defineProps({
@@ -35,7 +37,7 @@ defineProps({
 
         <div class="py-10">
 
-            <button @click="modal.handleClickModal()"
+            <button @click="modal.handleClickModal(store.form)"
                     class="flex items-center gap-2 text-indigo-500 hover:text-indigo-600"
                     type="button">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
@@ -49,12 +51,12 @@ defineProps({
 
             <!-- Crete tasks modal -->
             <CustomModal :modal="modal.modal"
-                         :form="modal.form"
+                         :form="store.form"
                          :categories="categories"
                          :statuses="statuses"
                          :update="modal.isUpdate"
-                         @submit="modal.action"
-                         @handleClickModal="modal.handleClickModal"
+                         @submit="store.action"
+                         @handleClickModal="modal.handleClickModal(store.form)"
             />
 
             <ul v-if="tasks.length > 0" role="list">
@@ -68,7 +70,7 @@ defineProps({
                     <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
                         <div class="flex justify-center gap-2">
                             <button
-                                @click="modal.handleClickModalUpdate(task)"
+                                @click="modal.handleClickModalUpdate(task, store.form)"
                                 class="text-md leading-6 text-gray-600 hover:bg-slate-100 p-1 rounded-md"
                             >
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -78,7 +80,7 @@ defineProps({
                                 </svg>
                             </button>
                             <button
-                                @click="modal.deleteTask(task.id)"
+                                @click="store.deleteTask(task.id)"
                                 class="text-md leading-6 text-gray-600 hover:bg-slate-100 p-1 rounded-md"
                             >
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"

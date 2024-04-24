@@ -35,10 +35,10 @@ defineProps({
             </h2>
         </template>
 
-        <div class="py-10">
+        <div class="py-6">
 
             <button @click="modal.handleClickModal(store.form)"
-                    class="flex items-center gap-2 text-indigo-500 hover:text-indigo-600"
+                    class="flex items-center gap-2 text-indigo-500 hover:text-indigo-600 mb-4"
                     type="button">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                      class="w-8 h-8">

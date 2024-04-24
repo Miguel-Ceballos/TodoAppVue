@@ -2,7 +2,7 @@ import {defineStore} from "pinia";
 import {router, useForm} from "@inertiajs/vue3";
 import {useModalStore} from "@/stores/modal.js";
 
-export const useTasksStore = defineStore('tasks', (type, callback) => {
+export const useTasksStore = defineStore('tasks', () => {
 
     const modal = useModalStore()
 

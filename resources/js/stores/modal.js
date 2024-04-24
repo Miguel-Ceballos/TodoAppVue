@@ -13,10 +13,10 @@ export const useModalStore = defineStore('modal', () => {
         form.reset()
     }
 
-    function handleClickModalUpdate(task, form) {
-        currentItem.value = task.id
+    function handleClickModalUpdate(item, form) {
+        currentItem.value = item.id
         isUpdate.value = true
-        Object.assign(form, task)
+        Object.assign(form, item)
         modal.value = !modal.value
     }
 

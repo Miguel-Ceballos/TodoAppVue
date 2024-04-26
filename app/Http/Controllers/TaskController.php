@@ -14,7 +14,7 @@ class TaskController extends Controller
      */
     public function index(Category $category)
     {
-        return inertia('Tasks/Index', [ 'tasks' => $category->tasks, 'category' => $category, 'statuses' => auth()->user()->statuses ]);
+        return inertia('Tasks/Index', [ 'tasks' => $category->tasks, 'category' => $category ]);
     }
 
     /**
@@ -22,7 +22,7 @@ class TaskController extends Controller
      */
     public function create(Category $category)
     {
-        return inertia('Tasks/Create', [ 'statuses' => auth()->user()->statuses, 'category' => $category ]);
+        return inertia('Tasks/Create', [ 'category' => $category ]);
     }
 
     /**
@@ -36,7 +36,6 @@ class TaskController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'category_id' => $category->id,
-            'status_id' => $request->status_id,
             'user_id' => auth()->user()->id
         ]);
         return redirect()->route('tasks.index', $category->slug);
@@ -55,7 +54,7 @@ class TaskController extends Controller
      */
     public function edit(Category $category, Task $task)
     {
-        return inertia('Tasks/Edit', [ 'task' => $task, 'statuses' => Status::all(), 'category' => $category ]);
+        return inertia('Tasks/Edit', [ 'task' => $task, 'category' => $category ]);
     }
 
     /**

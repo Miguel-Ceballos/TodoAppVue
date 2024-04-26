@@ -23,10 +23,6 @@ const props = defineProps({
     category: {
         type: Object,
         required: true
-    },
-    statuses: {
-        type: Object,
-        required: true
     }
 })
 
@@ -63,7 +59,6 @@ const deleteTask = (category, task) => {
 
             <TasksForm :modal="modal.modal"
                           :form="store.form"
-                          :statuses="statuses"
                           :update="modal.isUpdate"
                           @submit="store.action"
                           @handleClickModal="modal.handleClickModal(store.form)"

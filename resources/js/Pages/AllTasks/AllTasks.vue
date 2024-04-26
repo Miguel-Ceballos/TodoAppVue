@@ -4,7 +4,7 @@ import AllTasksForm from "@/Components/AllTasks/AllTasksForm.vue";
 import Checkbox from "@/Components/Checkbox.vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import {useModalStore} from "@/stores/modal.js";
-import {useAllTasksStore} from "@/stores/Alltasks.js";
+import {useAllTasksStore} from "@/stores/all-tasks.js";
 
 const modal = useModalStore()
 const store = useAllTasksStore()
@@ -12,10 +12,6 @@ const store = useAllTasksStore()
 
 defineProps({
     tasks: {
-        type: Object,
-        required: true
-    },
-    statuses: {
         type: Object,
         required: true
     },
@@ -52,7 +48,6 @@ defineProps({
             <AllTasksForm :modal="modal.modal"
                          :form="store.form"
                          :categories="categories"
-                         :statuses="statuses"
                          :update="modal.isUpdate"
                          @submit="store.action"
                          @handleClickModal="modal.handleClickModal(store.form)"

@@ -11,9 +11,7 @@ export const useTasksStore = defineStore('tasks', () => {
     const form = useForm({
         title: '',
         description: '',
-        status_id: {
-            type: Number
-        }
+        status: 0
     })
 
     function storeTask() {

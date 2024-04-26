@@ -61,16 +61,6 @@ defineEmits(['submit', 'handleClickModal', 'deleteTask'])
                               placeholder="Note description..."></textarea>
                     <InputError v-if="form.errors" :message="form.errors.description" class="mt-2"/>
                 </div>
-
-                <div class="col-span-6 sm:col-span-6">
-                    <InputLabel for="status_id" value="Status"/>
-                    <select id="status_id" name="status_id" v-model="form.status_id"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    >
-                        <option v-for="status in statuses" :value="status.id">{{ status.name }}</option>
-                    </select>
-                    <InputError v-if="form.errors" :message="form.errors.status_id" class="mt-2"/>
-                </div>
             </template>
 
             <template #actions>

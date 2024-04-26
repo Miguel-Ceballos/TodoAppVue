@@ -13,7 +13,6 @@ class AllTasksController extends Controller
     {
         return inertia('AllTasks/AllTasks', [
             'tasks' => auth()->user()->tasks,
-            'statuses' => auth()->user()->statuses,
             'categories' => auth()->user()->categories,
         ]);
     }
@@ -23,8 +22,8 @@ class AllTasksController extends Controller
         Task::create([
             'title' => $request->title,
             'description' => $request->description,
-            'category_id' => $request->category_id,
-            'status_id' => $request->status_id,
+            'status' => $request->status ?? 0,
+            'category_id' => $request->category_id ?? null,
             'user_id' => auth()->user()->id
         ]);
 

@@ -24,8 +24,8 @@ class TaskRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'max:100'],
             'description' => ['nullable', 'string', 'max:255'],
-            'status_id' => ['required'],
-            'category_id' => ['']
+            'status' => ['nullable', 'numeric', 'between:0,1'],
+            'category_id' => ['nullable']
         ];
     }
 }

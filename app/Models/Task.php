@@ -17,16 +17,11 @@ class Task extends Model
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
 
     public function category(): BelongsTo
     {
-        return $this->belongsTo(Category::class, 'category_id');
-    }
-
-    public function status(): HasOne
-    {
-        return $this->hasOne(Status::class, 'status_id');
+        return $this->belongsTo(Category::class);
     }
 }

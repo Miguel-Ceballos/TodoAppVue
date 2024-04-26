@@ -9,9 +9,7 @@ export const useAllTasksStore = defineStore('all-tasks', () => {
     const form = useForm({
         title: '',
         description: '',
-        status_id: {
-            type: Number
-        },
+        status: 0,
         category_id: {
             type: Number
         }

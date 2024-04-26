@@ -2,7 +2,7 @@ import {defineStore} from "pinia";
 import {router, useForm} from "@inertiajs/vue3";
 import {useModalStore} from "@/stores/modal.js";
 
-export const useTasksStore = defineStore('tasks', () => {
+export const useAllTasksStore = defineStore('all-tasks', () => {
 
     const modal = useModalStore()
 
@@ -11,11 +11,14 @@ export const useTasksStore = defineStore('tasks', () => {
         description: '',
         status_id: {
             type: Number
+        },
+        category_id: {
+            type: Number
         }
     })
 
     function storeTask() {
-        form.post(route('tasks.store'))
+        form.post(route('inbox.store'))
         router.on('success', (event) => {
             modal.modal = false
             form.reset()
@@ -23,13 +26,13 @@ export const useTasksStore = defineStore('tasks', () => {
     }
 
     function updateTask() {
-        form.put(route('tasks.update', [modal.currentItem]), {preserveScroll: true})
+        form.put(route('inbox.update', [modal.currentItem]), {preserveScroll: true})
         modal.modal = false
         form.reset()
     }
 
     function deleteTask(id) {
-        form.delete(route('tasks.destroy', [id]), {preserveScroll: true})
+        form.delete(route('inbox.destroy', [id]), {preserveScroll: true})
         modal.modal = false
     }
 

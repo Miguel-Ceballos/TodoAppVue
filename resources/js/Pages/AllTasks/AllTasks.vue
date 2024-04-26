@@ -1,13 +1,13 @@
 <script setup>
 
+import AllTasksForm from "@/Components/AllTasks/AllTasksForm.vue";
 import Checkbox from "@/Components/Checkbox.vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
-import CustomModal from "@/Components/CustomModal.vue";
 import {useModalStore} from "@/stores/modal.js";
-import {useTasksStore} from "@/stores/tasks.js";
+import {useAllTasksStore} from "@/stores/Alltasks.js";
 
 const modal = useModalStore()
-const store = useTasksStore()
+const store = useAllTasksStore()
 
 
 defineProps({
@@ -49,7 +49,7 @@ defineProps({
                 <span class="text-gray-800 hover:text-indigo-600">Add Task</span>
             </button>
 
-            <CustomModal :modal="modal.modal"
+            <AllTasksForm :modal="modal.modal"
                          :form="store.form"
                          :categories="categories"
                          :statuses="statuses"

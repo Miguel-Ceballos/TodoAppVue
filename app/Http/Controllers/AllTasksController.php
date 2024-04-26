@@ -11,7 +11,7 @@ class AllTasksController extends Controller
 {
     public function index()
     {
-        return inertia('Tasks/AllTasks', [
+        return inertia('AllTasks/AllTasks', [
             'tasks' => auth()->user()->tasks,
             'statuses' => auth()->user()->statuses,
             'categories' => auth()->user()->categories,

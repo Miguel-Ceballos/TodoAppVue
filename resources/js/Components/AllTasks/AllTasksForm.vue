@@ -107,7 +107,3 @@ defineEmits(['submit', 'handleClickModal', 'deleteTask'])
         </FormSection>
     </Modal>
 </template>
-
-<style scoped>
-
-</style>

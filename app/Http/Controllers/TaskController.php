@@ -14,7 +14,7 @@ class TaskController extends Controller
      */
     public function index(Category $category)
     {
-        return inertia('Tasks/Index', [ 'tasks' => $category->tasks, 'category' => $category ]);
+        return inertia('Tasks/Index', [ 'tasks' => $category->tasks, 'category' => $category, 'statuses' => auth()->user()->statuses ]);
     }
 
     /**

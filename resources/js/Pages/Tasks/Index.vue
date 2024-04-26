@@ -1,17 +1,30 @@
 <script setup>
 
 import AppLayout from "@/Layouts/AppLayout.vue";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
 import {Link, router} from "@inertiajs/vue3";
-import {Inertia} from "@inertiajs/inertia";
 import Checkbox from "@/Components/Checkbox.vue";
+import TasksForm from "@/Components/Tasks/TasksForm.vue";
+import {useModalStore} from "@/stores/modal.js";
+import {useTasksStore} from "@/stores/tasks.js";
+import {onMounted} from "vue";
 
-defineProps({
+const modal = useModalStore()
+const store = useTasksStore()
+
+onMounted(() => {
+    store.currentCategory = props.category.slug
+})
+
+const props = defineProps({
     tasks: {
         type: Object,
         required: true
     },
     category: {
+        type: Object,
+        required: true
+    },
+    statuses: {
         type: Object,
         required: true
     }
@@ -35,18 +48,27 @@ const deleteTask = (category, task) => {
         </template>
 
         <div class="py-10">
-            <Link :href="route('tasks.create', category.slug)">
-                <PrimaryButton type="button" class="mb-10">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                         class="w-4 h-4 mr-2">
-                        <path fill-rule="evenodd"
-                              d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z"
-                              clip-rule="evenodd"/>
-                    </svg>
-                    CREATE TASK
 
-                </PrimaryButton>
-            </Link>
+            <button @click="modal.handleClickModal(store.form)"
+                    class="flex items-center gap-2 text-indigo-500 hover:text-indigo-600 mb-4"
+                    type="button">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                     class="w-8 h-8">
+                    <path fill-rule="evenodd"
+                          d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z"
+                          clip-rule="evenodd"/>
+                </svg>
+                <span class="text-gray-800 hover:text-indigo-600">Add Task</span>
+            </button>
+
+            <TasksForm :modal="modal.modal"
+                          :form="store.form"
+                          :statuses="statuses"
+                          :update="modal.isUpdate"
+                          @submit="store.action"
+                          @handleClickModal="modal.handleClickModal(store.form)"
+                          @deleteTask="store.deleteTask(modal.currentItem)"
+            />
 
             <ul v-if="tasks.length > 0" role="list">
                 <li v-for="task in tasks"

@@ -16,7 +16,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return inertia('Categories/IndexCategories');
+        return inertia('Categories/IndexCategories', ['categories' => auth()->user()->categories]);
     }
 
     /**

@@ -11,6 +11,13 @@ const deleteCategory = id => {
     }
 }
 
+defineProps({
+    categories: {
+        type: Object,
+        required: true
+    }
+})
+
 </script>
 
 <template>
@@ -36,7 +43,7 @@ const deleteCategory = id => {
                 </PrimaryButton>
             </Link>
 
-            <ul v-if="$page.props.user.categories.length > 0" role="list" class="space-y-2">
+            <ul v-if="categories.length > 0" role="list" class="space-y-2">
                 <li v-for="category in $page.props.user.categories"
                     class="flex justify-between items-center gap-x-6 py-5 p-2 border-b"
                 >

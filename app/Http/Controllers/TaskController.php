@@ -30,14 +30,11 @@ class TaskController extends Controller
      */
     public function store(TaskRequest $request, Category $category)
     {
-
-//        dd($request);
-        Task::create([
+        $category->tasks()->attach(Task::create([
             'title' => $request->title,
             'description' => $request->description,
-            'category_id' => $category->id,
             'user_id' => auth()->user()->id
-        ]);
+        ])->id);
         return redirect()->route('tasks.index', $category->slug);
     }
 

@@ -11,6 +11,9 @@ class AllTasksController extends Controller
 {
     public function index()
     {
+
+
+        $task = Task::find(1);
         return inertia('AllTasks/AllTasks', [
             'tasks' => auth()->user()->tasks,
             'categories' => auth()->user()->categories,
@@ -19,13 +22,14 @@ class AllTasksController extends Controller
 
     public function store(TaskRequest $request)
     {
-        Task::create([
+        $categoryTask = $request->category_id;
+        $task = Task::create([
             'title' => $request->title,
             'description' => $request->description,
             'status' => $request->status ?? 0,
-            'category_id' => $request->category_id ?? null,
             'user_id' => auth()->user()->id
         ]);
+        if ($categoryTask) Category::find($categoryTask)->tasks()->attach([ $task->id ]);
 
         return redirect()->route('inbox.index');
     }

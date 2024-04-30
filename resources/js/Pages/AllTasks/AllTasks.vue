@@ -5,10 +5,10 @@ import Checkbox from "@/Components/Checkbox.vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import {useModalStore} from "@/stores/modal.js";
 import {useAllTasksStore} from "@/stores/all-tasks.js";
+import {computed} from "vue";
 
 const modal = useModalStore()
 const store = useAllTasksStore()
-
 
 defineProps({
     tasks: {
@@ -58,9 +58,9 @@ defineProps({
                 <li v-for="task in tasks"
                     class="flex items-center gap-1 md:gap-x-2 border-b hover:cursor-pointer hover:bg-gray-50"
                 >
-                    <Checkbox/>
+                    <Checkbox @click="store.markAsCompleted(task)" :checked="task.status === 1 ?? false"/>
                     <div class="flex w-full gap-4 py-5 p-2 text-gray-600" @click="modal.handleClickModalUpdate(task, store.form)">
-                        <p class="text-sm text-gray-800">{{ task.title }}</p>
+                        <p class="text-sm text-gray-800">{{task.status}} {{ task.title }}</p>
                     </div>
                 </li>
             </ul>

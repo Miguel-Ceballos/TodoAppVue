@@ -1,6 +1,7 @@
 import {defineStore} from "pinia";
 import {router, useForm} from "@inertiajs/vue3";
 import {useModalStore} from "@/stores/modal.js";
+import {computed} from "vue";
 
 export const useAllTasksStore = defineStore('all-tasks', () => {
 
@@ -24,6 +25,7 @@ export const useAllTasksStore = defineStore('all-tasks', () => {
     }
 
     function updateTask() {
+        // console.log(form)
         form.put(route('inbox.update', [modal.currentItem]), {preserveScroll: true})
         modal.modal = false
         form.reset()
@@ -43,9 +45,23 @@ export const useAllTasksStore = defineStore('all-tasks', () => {
         updateTask()
     }
 
+    function markAsCompleted(task){
+        Object.assign(form, task)
+        form.status = 1
+        form.put(route('inbox.update', [task]), {preserveScroll: true})
+        modal.modal = false
+        form.reset()
+        // // console.log(form)
+        //
+        // form.patch(route('inbox.update', [task]), {preserveScroll: true})
+        // modal.modal = false
+        // form.reset()
+    }
+
     return {
         form,
         action,
-        deleteTask
+        deleteTask,
+        markAsCompleted
     }
 })

@@ -17,19 +17,20 @@ export const useTasksStore = defineStore('tasks', () => {
     function storeTask() {
         form.post(route('tasks.store', [currentCategory.value]))
         router.on('success', (event) => {
-            modal.modal = false
             form.reset()
+            modal.modal = false
         })
     }
 
     function updateTask() {
         form.put(route('tasks.update', [currentCategory.value, modal.currentItem]), {preserveScroll: true})
-        modal.modal = false
         form.reset()
+        modal.modal = false
     }
 
     function deleteTask(id) {
         form.delete(route('tasks.destroy', [currentCategory.value, id]), {preserveScroll: true})
+        form.reset()
         modal.modal = false
     }
 

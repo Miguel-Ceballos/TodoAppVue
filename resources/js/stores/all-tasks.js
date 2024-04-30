@@ -31,6 +31,7 @@ export const useAllTasksStore = defineStore('all-tasks', () => {
 
     function deleteTask(id) {
         form.delete(route('inbox.destroy', [id]), {preserveScroll: true})
+        form.reset()
         modal.modal = false
     }
 

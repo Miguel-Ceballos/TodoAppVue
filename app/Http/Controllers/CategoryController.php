@@ -71,7 +71,10 @@ class CategoryController extends Controller
      */
     public function update(CategoryRequest $request, Category $category)
     {
-        $category->update($request->validated());
+        $attributes = $request->validated();
+        $attributes['slug'] = Str::slug($request->name);
+
+        $category->update($attributes);
         return redirect()->route('categories.index');
     }
 

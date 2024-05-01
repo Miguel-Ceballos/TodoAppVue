@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AllTasksController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CompletedTasksController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\TaskController;
 use Illuminate\Foundation\Application;
@@ -28,6 +29,9 @@ Route::middleware([ 'auth:sanctum', config('jetstream.auth_session'), 'verified'
     Route::post('/inbox', [AllTasksController::class, 'store'])->name('inbox.store');
     Route::put('/inbox/{task:id}', [AllTasksController::class, 'update'])->name('inbox.update');
     Route::delete('/inbox/{task:id}', [AllTasksController::class, 'destroy'])->name('inbox.destroy');
+
+    Route::get('/completed', [CompletedTasksController::class, 'index'])->name('completed-tasks.index');
+    Route::put('/completed/{task:id}', [CompletedTasksController::class, 'update'])->name('completed-tasks.update');
 });
 
 

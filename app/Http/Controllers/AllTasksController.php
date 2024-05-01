@@ -16,6 +16,7 @@ class AllTasksController extends Controller
             ->select('*')
             ->rightJoin('tasks', 'category_task.task_id', '=', 'tasks.id')
             ->where('user_id', '=', auth()->user()->id)
+            ->where('status', '=', 0)
             ->get();
 
         return inertia('AllTasks/AllTasks', [

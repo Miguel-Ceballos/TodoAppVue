@@ -27,7 +27,7 @@ defineProps({
     <AppLayout title="Tasks">
         <template #header>
             <h2 class="font-bold text-3xl text-gray-800 leading-tight">
-                Tasks
+                Completed Tasks
             </h2>
         </template>
 
@@ -58,15 +58,21 @@ defineProps({
                 <li v-for="task in tasks"
                     class="flex items-center gap-1 pl-2 md:gap-x-2 border-b hover:cursor-pointer hover:bg-gray-50"
                 >
-<!--                    <Checkbox @click="store.markAsComplete(task)" :checked="task.status === 1 ?? false"/>-->
-                    <button type="button" @click="store.markAsComplete(task)"
-                            class="border-gray-400 border rounded-full text-neutral-50 hover:text-gray-600">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 p-0.5">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+<!--                    <form @submit.prevent="store.markAsIncomplete(task)">-->
+<!--                        <button type="submit">-->
+<!--                            click here-->
+<!--                            <Checkbox  :checked="task.status === 1 ?? false"/>-->
+<!--                        </button>-->
+<!--                    </form>-->
+<!--                    <Checkbox @c="store.markAsIncomplete(task)" :checked="task.status === 1 ?? false"/>-->
+                    <button type="button" @click="store.markAsIncomplete(task)"
+                    class="border-gray-400 border rounded-full text-gray-600 hover:text-neutral-50">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-5 h-5 p-0.5">
+                            <path fill-rule="evenodd" d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z" clip-rule="evenodd" />
                         </svg>
                     </button>
                     <div class="flex w-full gap-4 py-5 p-2 text-gray-600" @click="modal.handleClickModalUpdate(task, store.form)">
-                        <p class="text-sm text-gray-800">{{ task.title }}</p>
+                        <p class="text-sm text-gray-800">{{task.status}} {{ task.title }}</p>
                     </div>
                 </li>
             </ul>

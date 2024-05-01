@@ -25,7 +25,6 @@ export const useAllTasksStore = defineStore('all-tasks', () => {
     }
 
     function updateTask() {
-        // console.log(form)
         form.put(route('inbox.update', [modal.currentItem]), {preserveScroll: true})
         modal.modal = false
         form.reset()
@@ -45,23 +44,27 @@ export const useAllTasksStore = defineStore('all-tasks', () => {
         updateTask()
     }
 
-    function markAsCompleted(task){
+    function markAsComplete(task){
         Object.assign(form, task)
         form.status = 1
         form.put(route('inbox.update', [task]), {preserveScroll: true})
         modal.modal = false
         form.reset()
-        // // console.log(form)
-        //
-        // form.patch(route('inbox.update', [task]), {preserveScroll: true})
-        // modal.modal = false
-        // form.reset()
+    }
+
+    function markAsIncomplete(task){
+        Object.assign(form, task)
+        form.status = 0
+        form.put(route('completed-tasks.update', [task]), {preserveScroll: true})
+        modal.modal = false
+        form.reset()
     }
 
     return {
         form,
         action,
         deleteTask,
-        markAsCompleted
+        markAsComplete,
+        markAsIncomplete
     }
 })

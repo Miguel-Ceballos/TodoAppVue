@@ -20,7 +20,7 @@ class Category extends Model
 
     public function tasks() : BelongsToMany
     {
-        return $this->belongsToMany(Task::class)->withTimestamps();
+        return $this->belongsToMany(Task::class)->withTimestamps()->where('status', '=', 0);
     }
 
 }

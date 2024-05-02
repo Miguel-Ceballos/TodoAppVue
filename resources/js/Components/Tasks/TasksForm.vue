@@ -20,10 +20,6 @@ defineProps({
         type: Boolean,
         required: true,
         default: false
-    },
-    statuses: {
-        type: Object,
-        required: true
     }
 })
 

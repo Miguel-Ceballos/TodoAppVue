@@ -69,7 +69,12 @@ const deleteTask = (category, task) => {
                 <li v-for="task in tasks"
                     class="flex items-center gap-1 md:gap-x-2 border-b hover:cursor-pointer hover:bg-gray-50"
                 >
-                    <Checkbox/>
+                    <button type="button" @click="store.markAsComplete(task)"
+                            class="border-gray-400 border rounded-full text-neutral-50 hover:text-gray-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 p-0.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                        </svg>
+                    </button>
                     <div class="flex w-full gap-4 py-5 p-2 text-gray-600" @click="modal.handleClickModalUpdate(task, store.form)">
                         <p class="text-sm text-gray-800">{{ task.title }}</p>
                     </div>

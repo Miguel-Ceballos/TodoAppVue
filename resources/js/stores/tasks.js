@@ -42,10 +42,19 @@ export const useTasksStore = defineStore('tasks', () => {
         updateTask()
     }
 
+    function markAsComplete(task){
+        Object.assign(form, task)
+        form.status = 1
+        form.put(route('tasks.update', [currentCategory.value, task]), {preserveScroll: true})
+        modal.modal = false
+        form.reset()
+    }
+
     return {
         form,
         currentCategory,
         action,
-        deleteTask
+        deleteTask,
+        markAsComplete
     }
 })

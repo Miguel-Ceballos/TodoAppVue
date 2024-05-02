@@ -58,7 +58,6 @@ defineProps({
                 <li v-for="task in tasks"
                     class="flex items-center gap-1 pl-2 md:gap-x-2 border-b hover:cursor-pointer hover:bg-gray-50"
                 >
-<!--                    <Checkbox @click="store.markAsComplete(task)" :checked="task.status === 1 ?? false"/>-->
                     <button type="button" @click="store.markAsComplete(task)"
                             class="border-gray-400 border rounded-full text-neutral-50 hover:text-gray-600">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 p-0.5">

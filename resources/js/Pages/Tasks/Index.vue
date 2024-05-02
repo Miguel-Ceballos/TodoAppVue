@@ -38,8 +38,8 @@ const deleteTask = (category, task) => {
 <template>
     <AppLayout title="Tasks">
         <template #header>
-            <h2 class="font-bold text-3xl text-gray-800 leading-tight">
-                Tasks
+            <h2 class="font-bold text-3xl text-gray-700 leading-tight">
+                Tasks {{ category.name }}
             </h2>
         </template>
 

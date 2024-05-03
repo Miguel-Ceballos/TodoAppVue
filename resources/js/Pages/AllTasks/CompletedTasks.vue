@@ -46,33 +46,38 @@ defineProps({
             </button>
 
             <AllTasksForm :modal="modal.modal"
-                         :form="store.form"
-                         :categories="categories"
-                         :update="modal.isUpdate"
-                         @submit="store.action"
-                         @handleClickModal="modal.handleClickModal(store.form)"
-                         @deleteTask="store.deleteTask(modal.currentItem)"
+                          :form="store.form"
+                          :categories="categories"
+                          :update="modal.isUpdate"
+                          :isCompleted="true"
+                          @submit="store.action"
+                          @handleClickModal="modal.handleClickModal(store.form)"
+                          @deleteTask="store.deleteTask(modal.currentItem)"
             />
 
             <ul v-if="tasks.length > 0" role="list">
                 <li v-for="task in tasks"
                     class="flex items-center gap-1 pl-2 md:gap-x-2 border-b hover:cursor-pointer hover:bg-gray-50"
                 >
-<!--                    <form @submit.prevent="store.markAsIncomplete(task)">-->
-<!--                        <button type="submit">-->
-<!--                            click here-->
-<!--                            <Checkbox  :checked="task.status === 1 ?? false"/>-->
-<!--                        </button>-->
-<!--                    </form>-->
-<!--                    <Checkbox @c="store.markAsIncomplete(task)" :checked="task.status === 1 ?? false"/>-->
+                    <!--                    <form @submit.prevent="store.markAsIncomplete(task)">-->
+                    <!--                        <button type="submit">-->
+                    <!--                            click here-->
+                    <!--                            <Checkbox  :checked="task.status === 1 ?? false"/>-->
+                    <!--                        </button>-->
+                    <!--                    </form>-->
+                    <!--                    <Checkbox @c="store.markAsIncomplete(task)" :checked="task.status === 1 ?? false"/>-->
                     <button type="button" @click="store.markAsIncomplete(task)"
-                    class="border-gray-400 border rounded-full text-gray-600 hover:text-neutral-50">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-5 h-5 p-0.5">
-                            <path fill-rule="evenodd" d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z" clip-rule="evenodd" />
+                            class="border-gray-400 border rounded-full text-gray-600 hover:text-neutral-50">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
+                             class="w-5 h-5 p-0.5">
+                            <path fill-rule="evenodd"
+                                  d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z"
+                                  clip-rule="evenodd"/>
                         </svg>
                     </button>
-                    <div class="flex w-full gap-4 py-5 p-2 text-gray-600" @click="modal.handleClickModalUpdate(task, store.form)">
-                        <p class="text-sm text-gray-800">{{task.status}} {{ task.title }}</p>
+                    <div class="flex w-full gap-4 py-5 p-2 text-gray-600"
+                         @click="modal.handleClickModalUpdate(task, store.form)">
+                        <p class="text-sm text-gray-800">{{ task.status }} {{ task.title }}</p>
                     </div>
                 </li>
             </ul>

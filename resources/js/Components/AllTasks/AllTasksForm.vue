@@ -24,6 +24,11 @@ const props = defineProps({
         type: Boolean,
         required: true,
         default: false
+    },
+    isCompleted: {
+        type: Boolean,
+        required: true,
+        default: false
     }
 })
 
@@ -50,7 +55,7 @@ defineEmits(['submit', 'handleClickModal', 'deleteTask'])
                 <div class="col-span-6 sm:col-span-6">
                     <InputLabel for="title" value="Name"/>
                     <TextInput id="title" v-model="form.title" type="text" autocomplete="title"
-                               class="mt-1 block w-full" placeholder="Note name"/>
+                               class="mt-1 block w-full" placeholder="Note name" :readonly="isCompleted"/>
                     <InputError v-if="form.errors" :message="form.errors.title" class="mt-2"/>
                 </div>
 
@@ -58,28 +63,28 @@ defineEmits(['submit', 'handleClickModal', 'deleteTask'])
                     <InputLabel for="description" value="Description"/>
                     <textarea id="description" name="description" v-model="form.description" rows="4"
                               class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                              placeholder="Note description..."></textarea>
+                              placeholder="Note description..." :readonly="isCompleted"></textarea>
                     <InputError v-if="form.errors" :message="form.errors.description" class="mt-2"/>
                 </div>
 
                 <div class="col-span-6 sm:col-span-6">
                     <InputLabel for="category_id" value="Category"/>
-                    <select id="category_id" name="category_id" v-model="form.category_id"
+                    <select id="category_id" name="category_id" v-model="form.category_id" :disabled="isCompleted"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     >
-                        <option v-for="category in categories" :value="category.id">{{ category.name }}</option>
+                        <option v-for="category in categories" :readonly="isCompleted" :value="category.id">{{ category.name }}</option>
                     </select>
                     <InputError v-if="form.errors" :message="form.errors.category_id" class="mt-2"/>
                 </div>
             </template>
 
             <template #actions>
-                <PrimaryButton>
+                <PrimaryButton v-if="!isCompleted">
                     {{ update ? 'Update' : 'Create' }}
                 </PrimaryButton>
             </template>
             <button
-                v-if="update"
+                v-if="update && !isCompleted"
                 @click="$emit('deleteTask')"
                 class="text-md leading-6 text-gray-600 p-1 rounded-md flex gap-2 hover:bg-red-50 hover:text-red-600"
             >

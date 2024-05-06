@@ -8,6 +8,8 @@ import {onMounted} from "vue";
 import {useModalStore} from "@/stores/modal.js";
 import {useAllTasksStore} from "@/stores/all-tasks.js";
 import AllTasksForm from "@/Components/AllTasks/AllTasksForm.vue";
+import DropdownLink from "@/Components/DropdownLink.vue";
+import Dropdown from "@/Components/Dropdown.vue";
 
 // const modalStore = useModalStore()
 // const store = useAllTasksStore()
@@ -62,28 +64,34 @@ const logout = () => {
         <div class="h-full px-3 py-4 overflow-y-auto bg-neutral-50 dark:bg-gray-800">
             <h1 class="text-2xl text-center my-4 text-slate-700">My <span class="font-bold">TODO</span> list</h1>
             <ul class="space-y-1 font-medium">
-<!--                <li>-->
-<!--                    <button @click="modalStore.handleClickModal(store.form)"-->
-<!--                            class="flex items-center pl-0 text-sm font-light text-indigo-600 rounded-sm hover:bg-slate-100 group transition duration-150 ease-in-out w-full gap-2"-->
-<!--                            type="button">-->
-<!--                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"-->
-<!--                             class="w-8 h-8">-->
-<!--                            <path fill-rule="evenodd"-->
-<!--                                  d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z"-->
-<!--                                  clip-rule="evenodd"/>-->
-<!--                        </svg>-->
-<!--                        <span class="font-bold">Add Task</span>-->
-<!--                    </button>-->
+                <li class="p-1 text-slate-700 hover:bg-slate-100 hover:cursor-pointer">
+                    <Dropdown>
+                        <template #trigger>
+                            <button type="button" class="flex items-center">
+                                {{ $page.props.auth.user.name }}
+                                <svg class="ms-2 -me-0.5 h-4 w-4 justify-end" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                </svg>
+                            </button>
+                        </template>
+                        <template #content>
+                            <!-- Account Management -->
+                            <div class="block px-4 py-2 text-xs text-gray-400">
+                                Manage Account
+                            </div>
 
-<!--                    <AllTasksForm :modal="modalStore.modal"-->
-<!--                                  :form="store.form"-->
-<!--                                  :categories="$page.props.user.categories"-->
-<!--                                  :update="modalStore.isUpdate"-->
-<!--                                  @submit="store.action"-->
-<!--                                  @handleClickModal="modal.handleClickModal(store.form)"-->
-<!--                                  @deleteTask="store.deleteTask(modalStore.currentItem)"-->
-<!--                    />-->
-<!--                </li>-->
+                            <DropdownLink :href="route('profile.show')">
+                                Profile
+                            </DropdownLink>
+                            <!-- Authentication -->
+                            <form @submit.prevent="logout">
+                                <DropdownLink as="button">
+                                    Log Out
+                                </DropdownLink>
+                            </form>
+                        </template>
+                    </Dropdown>
+                </li>
                 <li>
                     <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">

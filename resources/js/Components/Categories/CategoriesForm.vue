@@ -46,7 +46,7 @@ defineEmits(['submit', 'handleClickModal', 'deleteCategory'])
                     <InputLabel for="name" value="Name"/>
                     <TextInput id="name" v-model="form.name" type="text" autocomplete="name" class="mt-1 block w-full"
                                placeholder="Category name"/>
-                    <InputError v-if="form.errors" :message="form.errors.name" class="mt-2"/>
+                    <InputError v-if="$page.props.errorBags.name" :message="$page.props.errorBags.name[0][0]" class="mt-2"/>
                 </div>
             </template>
 

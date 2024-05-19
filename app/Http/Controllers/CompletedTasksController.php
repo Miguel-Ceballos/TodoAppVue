@@ -22,7 +22,7 @@ class CompletedTasksController extends Controller
             ->where('status', '=', 1)
             ->get();
 
-        return inertia('AllTasks/CompletedTasks', ['tasks' => $tasks, 'categories' => auth()->user()->categories]);
+        return inertia('AllTasks/CompletedTasks', [ 'tasks' => $tasks, 'categories' => auth()->user()->categories ]);
     }
 
     /**
@@ -79,5 +79,26 @@ class CompletedTasksController extends Controller
     public function destroy(Task $task)
     {
         //
+    }
+
+    public function returnCompletedTasks($id) : object
+    {
+        //dd($id);
+        if ( $id > 0 ) {
+            return DB::table('category_task')
+                ->select('*')
+                ->rightJoin('tasks', 'category_task.task_id', '=', 'tasks.id')
+                ->where('user_id', '=', auth()->user()->id)
+                ->where('status', '=', 1)
+                ->where('category_id', '=', $id)
+                ->get();
+        } else {
+            return DB::table('category_task')
+                ->select('*')
+                ->rightJoin('tasks', 'category_task.task_id', '=', 'tasks.id')
+                ->where('user_id', '=', auth()->user()->id)
+                ->where('status', '=', 1)
+                ->get();
+        }
     }
 }

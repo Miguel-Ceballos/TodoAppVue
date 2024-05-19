@@ -1,11 +1,14 @@
 import {defineStore} from "pinia";
 import {router, useForm} from "@inertiajs/vue3";
 import {useModalStore} from "@/stores/modal.js";
-import {computed} from "vue";
+import {computed, ref} from "vue";
+import axios from "axios";
 
 export const useAllTasksStore = defineStore('all-tasks', () => {
 
     const modal = useModalStore()
+    const filterId = ref(0)
+    const tasksCompleted = ref([])
 
     const form = useForm({
         title: '',
@@ -58,13 +61,25 @@ export const useAllTasksStore = defineStore('all-tasks', () => {
         form.put(route('completed-tasks.update', [task]), {preserveScroll: true})
         modal.modal = false
         form.reset()
+        FilterTasksByCategory()
+    }
+
+    const FilterTasksByCategory = () => {
+        console.log(filterId.value)
+        axios(route('tasks-completed', filterId.value))
+            .then(({data}) => tasksCompleted.value = data)
+            .catch(error => console.log(error))
+        console.log(tasksCompleted.value)
     }
 
     return {
         form,
+        filterId,
+        tasksCompleted,
         action,
         deleteTask,
         markAsComplete,
-        markAsIncomplete
+        markAsIncomplete,
+        FilterTasksByCategory
     }
 })

@@ -1,14 +1,20 @@
 <script setup>
 
 import AllTasksForm from "@/Components/AllTasks/AllTasksForm.vue";
-import Checkbox from "@/Components/Checkbox.vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import {useModalStore} from "@/stores/modal.js";
 import {useAllTasksStore} from "@/stores/all-tasks.js";
-import {computed} from "vue";
+import {onMounted, ref} from "vue";
+import InputLabel from "@/Components/InputLabel.vue";
+import axios from "axios";
 
 const modal = useModalStore()
 const store = useAllTasksStore()
+
+
+onMounted(() => {
+    store.FilterTasksByCategory()
+})
 
 defineProps({
     tasks: {
@@ -31,8 +37,17 @@ defineProps({
             </h2>
         </template>
 
-        <div class="py-6">
+        <div class="col-span-6 sm:col-span-6 w-1/2 mx-auto py-4">
+            <InputLabel for="category_id" value="Filter by category:"/>
+            <select id="category_id" name="category_id" v-model="store.filterId" @change="store.FilterTasksByCategory"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            >
+                <option selected value="0">All</option>
+                <option v-for="category in categories" :value="category.id">{{ category.name }}</option>
+            </select>
+        </div>
 
+        <div class="py-6">
             <button @click="modal.handleClickModal(store.form)"
                     class="flex items-center gap-2 text-indigo-500 hover:text-indigo-600 mb-4"
                     type="button">
@@ -55,8 +70,8 @@ defineProps({
                           @deleteTask="store.deleteTask(modal.currentItem)"
             />
 
-            <ul v-if="tasks.length > 0" role="list">
-                <li v-for="task in tasks"
+            <ul v-if="store.tasksCompleted.length > 0" role="list">
+                <li v-for="task in store.tasksCompleted"
                     class="flex items-center gap-1 pl-2 md:gap-x-2 border-b hover:cursor-pointer hover:bg-gray-50"
                 >
                     <!--                    <form @submit.prevent="store.markAsIncomplete(task)">-->

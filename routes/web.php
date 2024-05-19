@@ -32,6 +32,7 @@ Route::middleware([ 'auth:sanctum', config('jetstream.auth_session'), 'verified'
 
     Route::get('/completed', [CompletedTasksController::class, 'index'])->name('completed-tasks.index');
     Route::put('/completed/{task:id}', [CompletedTasksController::class, 'update'])->name('completed-tasks.update');
+    Route::get('/completed/{category:id}', [CompletedTasksController::class, 'returnCompletedTasks'])->name('tasks-completed');
 });
 
 
